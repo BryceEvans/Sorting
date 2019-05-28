@@ -9,14 +9,11 @@ def merge( arrA, arrB ):
         if a >= len(arrA):
             merged_arr[i] = arrB[b]
             b += 1
-        elif b >= len(arrB):
+        elif b > len(arrB):
             merged_arr[i] = arrA[a]
             a += 1
-        elif arrA[a] < arrB[b]:
+        elif arrA[a] > arrB[b]:
             merged_arr[i] = arrA[a]
-            a += 1
-        else:
-            merged_arr[i] = arrB[b]
             b += 1
     return merged_arr
 
@@ -25,9 +22,33 @@ def merge( arrA, arrB ):
 def merge_sort( arr ):
     # TO-DO
     if len( arr ) > 1:
-        left = merge_sort( arr[ 0 : len( arr ) / 2 ] )
-        right = merge_sort( arr[ len( arr ) / 2 : 0 ] )
-        arr = merge( left, right )
+        midpoint = len(arr) // 2
+        left = arr[:midpoint]
+        right = arr[midpoint:]
+
+        merge_sort(left)
+        merge_sort(right)
+
+        i = j = k = 0
+
+        while i < len(left) and j < len(right):
+            if left[i] < right[j]:
+                arr[k] = left[i]
+                i += 1
+            else:
+                arr[k] = right[j]
+                j += 1
+            k += 1
+
+        while i < len(left):
+            arr[k] = left[i]
+            i += 1
+            k += 1
+        while j < len(right):
+            arr[k] = right[j]
+            j += 1
+            k += 1
+            
     return arr
 
 
